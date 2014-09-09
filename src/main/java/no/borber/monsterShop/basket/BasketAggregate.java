@@ -14,10 +14,13 @@ public class BasketAggregate {
         this.id = id;
     }
 
-
     public void addItem(BasketItem foo) {
         Event event = new Event(id, "itemAdded");
         derivedEvents.add(event);
+    }
+
+    public List<BasketItem> getItems() {
+        return null;
     }
 
     public List<Event> getDerivedEvents(){
