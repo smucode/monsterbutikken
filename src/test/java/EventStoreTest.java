@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 
 import no.borber.monsterShop.Event;
 import no.borber.monsterShop.EventStore;
+import no.borber.monsterShop.Projection;
 import org.junit.Test;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
@@ -15,7 +16,7 @@ import java.util.List;
 public class EventStoreTest {
 
     @Test
-    public void testCanStoreAndFetchAggregateEvents() {
+    public void canStoreAndFetchAggregateEvents() {
         Event event = new Event();
         EventStore store = new EventStore();
         store.store(event);
@@ -25,6 +26,30 @@ public class EventStoreTest {
         assertEquals(aggregateEvents.size(), 1);
         Event stored = aggregateEvents.get(0);
         assertEquals(stored.getId(), event.getId());
+    }
+
+    @Test
+    public void projectionReceivesEvent() {
+        Projection projection = new Projection() {
+            Event received;
+            @Override
+            public void receiveEvent(Event event) {
+                received = event;
+            }
+
+            @Override
+            public Event getEvent() {
+                return received;
+            }
+        };
+
+        EventStore store = new EventStore();
+        store.registerProjection(projection);
+
+        Event event = new Event();
+        store.store(event);
+
+        assertNotNull(projection.getEvent());
     }
 
 }

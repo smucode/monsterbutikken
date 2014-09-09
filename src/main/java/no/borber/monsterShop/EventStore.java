@@ -22,4 +22,7 @@ public class EventStore {
         }
         return aggregateEvents;
     }
+
+    public void registerProjection(Projection projection) {
+    }
 }
