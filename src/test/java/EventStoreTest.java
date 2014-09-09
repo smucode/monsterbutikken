@@ -17,7 +17,7 @@ public class EventStoreTest {
 
     @Test
     public void canStoreAndFetchAggregateEvents() {
-        Event event = new Event();
+        Event event = new Event(12, "");
         EventStore store = new EventStore();
         store.store(event);
         List<Event> aggregateEvents = store.getAggregateEvents(event.getId());
@@ -46,7 +46,7 @@ public class EventStoreTest {
         EventStore store = new EventStore();
         store.registerProjection(projection);
 
-        Event event = new Event();
+        Event event = new Event(12, "");
         store.store(event);
 
         assertNotNull(projection.getEvent());
