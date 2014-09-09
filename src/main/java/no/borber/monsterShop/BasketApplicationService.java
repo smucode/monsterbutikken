@@ -10,7 +10,7 @@ public class BasketApplicationService {
     private EventStore eventStore;
 
     public BasketApplicationService(EventStore eventStore){
-        eventStore = eventStore;
+        this.eventStore = eventStore;
     }
 
     public void doSomething(int i) {
@@ -22,6 +22,7 @@ public class BasketApplicationService {
 
         basket.addItem(foo);
 
+        basket.getDerivedEvents().stream().forEach(e -> eventStore.store(e));
     }
 
     // addItem
