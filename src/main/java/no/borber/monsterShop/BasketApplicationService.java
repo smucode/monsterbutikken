@@ -28,6 +28,15 @@ public class BasketApplicationService {
         basket.getDerivedEvents().stream().forEach(e -> eventStore.store(e));
     }
 
+    public void removeItem(int basketId, String monstertype) {
+        List<Event> events = eventStore.getAggregateEvents(basketId);
+        BasketAggregate basket = new BasketAggregate(basketId, events);
+
+        basket.removeItem(monstertype);
+
+        basket.getDerivedEvents().stream().forEach(e -> eventStore.store(e));
+    }
+
     // addItem
     // removeItem
 

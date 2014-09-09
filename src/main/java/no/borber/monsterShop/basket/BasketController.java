@@ -52,7 +52,7 @@ public class BasketController extends MonsterShopController{
     @RequestMapping(value = "/basket/{monstertype}",  method=RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public void remove(@PathVariable String monstertype){
-
+        bas.removeItem(42, monstertype);
     }
 
     /**

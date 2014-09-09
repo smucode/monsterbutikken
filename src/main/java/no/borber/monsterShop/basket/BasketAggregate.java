@@ -17,7 +17,6 @@ public class BasketAggregate {
     public BasketAggregate(int id, List<Event> events){
         this.id = id;
 
-
         events.stream().map(e -> (BasketEvent)e).forEach(be -> {
             if (be.getType().equals("itemAdded")) {
                 basketItems.add(be.getItem());
@@ -36,6 +35,17 @@ public class BasketAggregate {
 
     public void addItem(BasketItem foo) {
         BasketEvent event = new BasketEvent(id, "itemAdded", foo);
+        derivedEvents.add(event);
+    }
+
+    public void removeItem(String monstername){
+        for(BasketItem item : basketItems){
+            if(item.getName().equals(monstername)){
+                basketItems.remove(item);
+                break;
+            }
+        }
+        BasketEvent event = new BasketEvent(id, "itemRemoved", new BasketItem(monstername, 42.0));
         derivedEvents.add(event);
     }
 
