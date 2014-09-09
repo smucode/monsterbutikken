@@ -51,5 +51,4 @@ public class EventStoreTest {
 
         assertNotNull(projection.getEvent());
     }
-
 }
