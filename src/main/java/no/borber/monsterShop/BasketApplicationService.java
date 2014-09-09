@@ -13,7 +13,10 @@ public class BasketApplicationService {
         this.eventStore = eventStore;
     }
 
-    public void doSomething(int i) {
+    public List<BasketItem> getItems(int basketId) {
+        List<Event> events = eventStore.getAggregateEvents(basketId);
+        BasketAggregate basket = new BasketAggregate(basketId, events);
+        return basket.getItems();
     }
 
     public void addItem(int basketId, BasketItem foo) {

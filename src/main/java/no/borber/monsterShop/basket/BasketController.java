@@ -1,15 +1,21 @@
 package no.borber.monsterShop.basket;
 
+import no.borber.monsterShop.BasketApplicationService;
+import no.borber.monsterShop.EventStore;
 import no.borber.monsterShop.MonsterShopController;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 
 @Controller
 public class BasketController extends MonsterShopController{
+
+    private static BasketApplicationService bas = new BasketApplicationService(new EventStore());
 
     /**
      * Gets the current state of a customers basket
@@ -19,7 +25,10 @@ public class BasketController extends MonsterShopController{
     @RequestMapping(value = "/basket/",  method=RequestMethod.GET)
     @ResponseBody()
     public Map<String, BasketItem> getBasket(){
-        return null;
+        // Map<String, Choice> result =
+        // choices.stream().collect(Collectors.toMap(Choice::getName,
+        //         Function.<Choice>identity());
+        return bas.getItems(42).stream().collect(Collectors.toMap(BasketItem::toString, Function.<BasketItem>identity()));
     }
 
     /**
@@ -31,7 +40,7 @@ public class BasketController extends MonsterShopController{
     @RequestMapping(value = "/basket/{monstertype}",  method=RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public void add(@PathVariable String monstertype){
-
+        bas.addItem(42, new BasketItem(monstertype, 42));
     }
 
     /**

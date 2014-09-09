@@ -35,7 +35,7 @@ public class BasketAggregate {
     }
 
     public void addItem(BasketItem foo) {
-        Event event = new Event(id, "itemAdded");
+        BasketEvent event = new BasketEvent(id, "itemAdded", foo);
         derivedEvents.add(event);
     }
 
